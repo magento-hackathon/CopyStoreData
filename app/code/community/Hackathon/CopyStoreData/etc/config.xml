@@ -10,6 +10,11 @@
                 <class>Hackathon_CopyStoreData_Model</class>
             </hackathon_copystoredata>
         </models>
+        <blocks>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Block</class>
+            </hackathon_copystoredata>
+        </blocks>
     </global>
     <adminhtml>
         <events>
@@ -23,5 +28,12 @@
                 </observers>
             </controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save>
         </events>
+        <layout>
+            <updates>
+                <news>
+                    <file>hackathon/copystoredata.xml</file>
+                </news>
+            </updates>
+        </layout>
     </adminhtml>
 </config>

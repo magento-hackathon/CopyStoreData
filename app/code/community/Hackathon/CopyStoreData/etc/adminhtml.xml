@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <categorycopy translate="title" module="catalog">
+                    <title>Copy Category Data</title>
+                    <action>adminhtml/catalog_category_copy/</action>
+                    <sort_order>15</sort_order>
+                </categorycopy>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <categories translate="title">
+                                <title>Manage Categories</title>
+                            </categories>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
