@@ -6,4 +6,11 @@
             <action method="addTab"><name>copy_store_data</name><block>tab_copy_store_data</block></action>
         </reference>
     </adminhtml_catalog_product_action_attribute_edit>
+    <adminhtml_catalogcategorycopy_index>
+        <reference name="content">
+            <!--<block type="JeroenVermeulen_AdminForm/demo_form" name="content/demo_form" template="jeroenvermeulen_adminform/demo/form.phtml"/>-->
+            <!-- Without custom block object: -->
+            <block type="adminhtml/template" name="content/demo_form" template="hackathon/catalog/category/form.phtml"/>
+        </reference>
+    </adminhtml_catalogcategorycopy_index>
 </layout>
