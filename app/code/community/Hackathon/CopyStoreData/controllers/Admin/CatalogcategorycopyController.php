@@ -34,7 +34,10 @@ class Hackathon_CopyStoreData_Admin_CatalogcategorycopyController extends Mage_A
                     foreach ($categoryDataArray as $key => $value) {
                         $attribute = $categoryToCopy->getResource()->getAttribute($key);
 
-                        if (!is_object($value) && is_object($attribute) && $attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
+                        if (!is_object($value) && is_object($attribute)
+                            && $attribute->getBackendType() != 'static'
+                            && $attribute->getIsGlobal() == 0
+                            && $attribute->getAttributeCode() != "url_key") {
                                 $rawValue = Mage::getResourceModel('catalog/category')->getAttributeRawValue($categoryToCopy->getId(), $attribute->getAttributeCode(), $copyFromStore);
                                 $categoryToCopy->setData($key, ($rawValue == NULL ? false : $value));
                                 $categoryToCopy->setStoreId($copyToStore)->getResource()->saveAttribute($categoryToCopy, $key);
