@@ -1,4 +1,4 @@
-# CopyStoreData
+# Hackathon_CopyStoreData
 
 In Europe a lot of international shops have store views that are partly similar.
 For example Germany-German and Austria-German.
