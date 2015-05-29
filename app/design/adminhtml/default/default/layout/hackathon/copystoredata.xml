@@ -8,9 +8,7 @@
     </adminhtml_catalog_product_action_attribute_edit>
     <adminhtml_catalogcategorycopy_index>
         <reference name="content">
-            <!--<block type="JeroenVermeulen_AdminForm/demo_form" name="content/demo_form" template="jeroenvermeulen_adminform/demo/form.phtml"/>-->
-            <!-- Without custom block object: -->
-            <block type="adminhtml/template" name="content/demo_form" template="hackathon/catalog/category/form.phtml"/>
+            <block type="hackathon_copystoredata/adminhtml_catalog_category_copyform" name="form" />
         </reference>
     </adminhtml_catalogcategorycopy_index>
 </layout>

@@ -15,6 +15,11 @@
                 <class>Hackathon_CopyStoreData_Block</class>
             </hackathon_copystoredata>
         </blocks>
+        <helpers>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Helper</class>
+            </hackathon_copystoredata>
+        </helpers>
     </global>
     <adminhtml>
         <events>

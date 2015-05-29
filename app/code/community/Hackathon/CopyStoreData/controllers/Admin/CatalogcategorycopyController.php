@@ -17,5 +17,8 @@ class Hackathon_CopyStoreData_Admin_CatalogcategorycopyController extends Mage_A
         //header( 'Content-Type: text/xml' ); echo $this->getLayout()->getXmlString(); exit;
     }
 
+    public function postAction() {
+        echo 'POST';
+    }
 
 }
