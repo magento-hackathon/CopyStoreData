@@ -17,7 +17,6 @@ class Hackathon_CopyStoreData_Block_Adminhtml_Catalog_Category_Copyform extends 
         ));
 
         $fieldset->addField('category_ids', 'note', array(
-            'name'      => 'category_ids',
             'label'     => $this->__('For which Categories'),
             'title'     => $this->__('Attribute Set'),
             'required'  => true,
@@ -33,6 +32,7 @@ class Hackathon_CopyStoreData_Block_Adminhtml_Catalog_Category_Copyform extends 
         ));
 
         $fieldset->addField('copy_to_stores', 'multiselect', array(
+            'name'  => 'copy_to_stores',
             'label' => Mage::helper('hackathon_copystoredata')->__('Copy To Store'),
             'title' => Mage::helper('hackathon_copystoredata')->__('Copy To Store'),
             'required' => true,
