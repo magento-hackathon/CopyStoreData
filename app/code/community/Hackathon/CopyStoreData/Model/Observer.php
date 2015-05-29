@@ -142,11 +142,10 @@ class Hackathon_CopyStoreData_Model_Observer
                     $productDataArray = $productToCopy->getData();
                     foreach ($productDataArray as $key => $value) {
                         $attribute = $productToCopy->getResource()->getAttribute($key);
-                        if (!is_object($value) && is_object($attribute)) {
-                            if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
-                                $productToCopy->setData($key, $value == NULL ? false : $value);
+                        if (!is_object($value) && is_object($attribute) && $attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
+                                $rawValue = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productToCopy->getId(), $attribute->getAttributeCode(), $copyFromId);
+                                $productToCopy->setData($key, ($rawValue == NULL ? false : $value));
                                 $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
-                            }
                         }
                     }
                 }
