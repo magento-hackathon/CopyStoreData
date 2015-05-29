@@ -144,7 +144,7 @@ class Hackathon_CopyStoreData_Model_Observer
                         $attribute = $productToCopy->getResource()->getAttribute($key);
                         if (!is_object($value) && is_object($attribute)) {
                             if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
-                                $productToCopy->setData($key, $value);
+                                $productToCopy->setData($key, $value == NULL ? false : $value);
                                 $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
                             }
                         }
