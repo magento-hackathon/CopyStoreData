@@ -4,4 +4,20 @@
             <version>0.0.1</version>
         </Hackathon_CopyStoreData>
     </modules>
+    <global>
+        <blocks>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Block</class>
+            </hackathon_copystoredata>
+        </blocks>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <news>
+                    <file>hackathon/copystoredata.xml</file>
+                </news>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_product_action_attribute_edit>
+        <reference name="attributes_tabs">
+            <block type="hackathon_copystoredata/adminhtml_catalog_product_edit_action_attribute_tab_copyStoreData" name="tab_copy_store_data" template="hackathon/catalog/product/edit/action/copystoredata.phtml" />
+            <action method="addTab"><name>copy_store_data</name><block>tab_copy_store_data</block></action>
+        </reference>
+    </adminhtml_catalog_product_action_attribute_edit>
+</layout>
