@@ -15,6 +15,11 @@
                 <class>Hackathon_CopyStoreData_Helper</class>
             </hackathon_copystoredata>
         </helpers>
+        <blocks>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Block</class>
+            </hackathon_copystoredata>
+        </blocks>
         <events>
             <catalog_product_save_after>
                 <observers>
