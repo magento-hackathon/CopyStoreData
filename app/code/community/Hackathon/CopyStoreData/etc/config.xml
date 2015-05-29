@@ -10,16 +10,27 @@
                 <class>Hackathon_CopyStoreData_Model</class>
             </hackathon_copystoredata>
         </models>
-        <blocks>
-            <hackathon_copystoredata>
-                <class>Hackathon_CopyStoreData_Block</class>
-            </hackathon_copystoredata>
-        </blocks>
         <helpers>
             <hackathon_copystoredata>
                 <class>Hackathon_CopyStoreData_Helper</class>
             </hackathon_copystoredata>
         </helpers>
+        <blocks>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Block</class>
+            </hackathon_copystoredata>
+        </blocks>
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <catalog_product_save_after_handler>
+                        <type>singleton</type>
+                        <class>hackathon_copystoredata/observer</class>
+                        <method>copyToStore</method>
+                    </catalog_product_save_after_handler>
+                </observers>
+            </catalog_product_save_after>
+        </events>
     </global>
     <adminhtml>
         <events>
@@ -53,4 +64,5 @@
             </adminhtml>
         </routers>
     </admin>
+
 </config>

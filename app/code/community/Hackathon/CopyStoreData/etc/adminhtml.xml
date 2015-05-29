@@ -15,6 +15,18 @@
         <resources>
             <admin>
                 <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <copystoredata translate="title" module="copystoredata">
+                                        <title>Copy Store Data</title>
+                                        <sort_order>0</sort_order>
+                                    </copystoredata>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
                     <catalog>
                         <children>
                             <categorycopy translate="title">
