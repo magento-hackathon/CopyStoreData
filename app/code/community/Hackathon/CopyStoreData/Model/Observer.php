@@ -25,7 +25,7 @@ class Hackathon_CopyStoreData_Model_Observer
     /**
      * @var
      */
-    public $_changedAttributes;
+    public $_changedAttributes = array();
 
     /**
      * @param Varien_Event_Observer $observer
@@ -38,9 +38,14 @@ class Hackathon_CopyStoreData_Model_Observer
 
         if (count($this->_copiedStores) == 0) {
             $this->_copiedStores[] = $product->getStoreId();
-        }
 
-        $this->_changedAttributes = array_diff($product->getData(), $product->getOrigData());
+            $originalData = $product->getOrigData();
+            foreach($product->getData() as $key => $value){
+                if(!is_object($value) && $originalData[$key] != $value){
+                    $this->_changedAttributes[$key] = $value;
+                }
+            }
+        }
 
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
         $storeIds = $read->query("SELECT scope_id as store FROM core_config_data WHERE scope = 'stores' AND path = '" . self::STORE_CONFIG . "' AND value =" . $product->getStoreId());
