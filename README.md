@@ -4,17 +4,15 @@ In Europe a lot of international shops have store views that are partly similar.
 For example Germany-German and Austria-German.
 There is no easy way to copy a most of the data, we would like to create a solution for that.
 
+Configure syncronisation of certain attributes beween store views om product Save.
 
 * System
   * Configuration
     * Select a store view
     * HACKATHON
-      * Copy Store Data = this is applied on product save
+      * Copy Store Data
 
-
-* Catalog
-  * Copy Category Data = form to copy category settings between categories
-
+Mass copy all attributes between selected products
 
 * Catalog
   * Manage Products
@@ -23,3 +21,7 @@ There is no easy way to copy a most of the data, we would like to create a solut
       * Update attributes
         * We added a new tab: Copy Store Data 
   
+Form to copy category data between store views
+
+* Catalog
+  * Copy Category Data
