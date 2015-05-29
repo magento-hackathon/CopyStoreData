@@ -4,4 +4,27 @@
             <version>0.0.1</version>
         </Hackathon_CopyStoreData>
     </modules>
+    <global>
+        <models>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Model</class>
+            </hackathon_copystoredata>
+        </models>
+        <helpers>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Helper</class>
+            </hackathon_copystoredata>
+        </helpers>
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <catalog_product_save_after_handler>
+                        <type>singleton</type>
+                        <class>hackathon_copystoredata/observer</class>
+                        <method>copyToStore</method>
+                    </catalog_product_save_after_handler>
+                </observers>
+            </catalog_product_save_after>
+        </events>
+    </global>
 </config>
