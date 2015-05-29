@@ -1,1 +1,65 @@
-Copy store data template
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Copy From Store') ?></h4>
+    </div>
+    <fieldset id="group_fields">
+        <?php foreach ($this->getWebsiteCollection() as $_website): ?>
+            <div>
+                <div class="website-name">
+                    <big><strong><?php echo $this->escapeHtml($_website->getName()) ?></strong></big>
+                </div>
+                <div class="webiste-groups" id="website_<?php echo $_website->getId() ?>_data">
+                    <?php foreach ($this->getGroupCollection($_website) as $_group): ?>
+                        <h4><?php echo $this->escapeHtml($_group->getName()) ?></h4>
+                        <div class="group-stores">
+                            <table>
+                                <?php foreach ($this->getStoreCollection($_group) as $_store): ?>
+                                    <tr>
+                                        <td>
+                                            <input name="copy_from_store" value="<?php echo $_store->getId() ?>" class="radio store-radio" id="copy_from_store_<?php echo $_store->getId() ?>" type="radio" />
+                                            <label for="copy_from_store_<?php echo $_store->getId() ?>"><?php echo $this->escapeHtml($_store->getName()) ?></label>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </fieldset>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Copy To Stores') ?></h4>
+    </div>
+    <fieldset id="group_fields">
+        <?php foreach ($this->getWebsiteCollection() as $_website): ?>
+            <div>
+                <div class="website-name">
+                    <big><strong><?php echo $this->escapeHtml($_website->getName()) ?></strong></big>
+                </div>
+                <div class="webiste-groups" id="website_<?php echo $_website->getId() ?>_data">
+                    <?php foreach ($this->getGroupCollection($_website) as $_group): ?>
+                        <h4><?php echo $this->escapeHtml($_group->getName()) ?></h4>
+                        <div class="group-stores">
+                            <table>
+                                <?php foreach ($this->getStoreCollection($_group) as $_store): ?>
+                                    <tr>
+                                        <td>
+                                            <input name="copy_to_stores[]" value="<?php echo $_store->getId() ?>" class="checkbox store-checkbox" id="copy_to_stores_<?php echo $_store->getId() ?>" type="checkbox" />
+                                            <label for="copy_to_stores_<?php echo $_store->getId() ?>"><?php echo $this->escapeHtml($_store->getName()) ?></label>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </fieldset>
+</div>

@@ -27,8 +27,8 @@ class Hackathon_CopyStoreData_Model_Observer extends Varien_Event_Observer
                 $productDataArray = $productToCopy->getData();
                 foreach ($productDataArray as $key => $value) {
                     $attribute = $productToCopy->getResource()->getAttribute($key);
-                    if (!is_object($value) && $attribute->getIsGlobal() == 0) {
-                        if ($attribute->getBackendType() != 'static') {
+                    if (!is_object($value) && is_object($attribute)) {
+                        if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
                             $productToCopy->setData($key, $value);
                             $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
                         }
