@@ -13,8 +13,8 @@ class Hackathon_CopyStoreData_Model_Observer extends Varien_Event_Observer
     public function controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save($observer)
     {
         $productIds = Mage::helper('adminhtml/catalog_product_edit_action_attribute')->getProductIds();
-        $copyFromId = Mage::app()->getRequest()->getParams('copy_from_store');
-        $copyToIds = Mage::app()->getRequest()->getParams('copy_to_stores');
+        $copyFromId = Mage::app()->getRequest()->getParam('copy_from_store');
+        $copyToIds = Mage::app()->getRequest()->getParam('copy_to_stores');
 
         foreach ($copyToIds as $copyToId) {
             $productsToCopy = Mage::getResourceModel('catalog/product_collection')
@@ -37,7 +37,5 @@ class Hackathon_CopyStoreData_Model_Observer extends Varien_Event_Observer
                 }
             }
         }
-
-
     }
 }
