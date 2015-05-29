@@ -4,4 +4,16 @@
             <version>0.0.1</version>
         </Hackathon_CopyStoreData>
     </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <!-- URL:  http://[MAGROOT]/admin/[CONTROLLER]/[ACTION]/key/[NONCE]/ -->
+                        <Hackathon_CopyStoreData after="Mage_Adminhtml">Hackathon_CopyStoreData_Admin</Hackathon_CopyStoreData>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

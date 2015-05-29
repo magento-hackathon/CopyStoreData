@@ -5,7 +5,7 @@
             <children>
                 <categorycopy translate="title" module="catalog">
                     <title>Copy Category Data</title>
-                    <action>adminhtml/catalog_category_copy/</action>
+                    <action>adminhtml/catalogcategorycopy/</action>
                     <sort_order>15</sort_order>
                 </categorycopy>
             </children>
@@ -17,9 +17,9 @@
                 <children>
                     <catalog>
                         <children>
-                            <categories translate="title">
-                                <title>Manage Categories</title>
-                            </categories>
+                            <categorycopy translate="title">
+                                <title>Copy Category Data</title>
+                            </categorycopy>
                         </children>
                     </catalog>
                 </children>
