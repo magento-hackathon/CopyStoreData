@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <config>
+    <menu>
+        <catalog>
+            <children>
+                <categorycopy translate="title" module="catalog">
+                    <title>Copy Category Data</title>
+                    <action>adminhtml/catalogcategorycopy/</action>
+                    <sort_order>15</sort_order>
+                </categorycopy>
+            </children>
+        </catalog>
+    </menu>
     <acl>
         <resources>
             <admin>
@@ -16,6 +27,13 @@
                             </config>
                         </children>
                     </system>
+                    <catalog>
+                        <children>
+                            <categorycopy translate="title">
+                                <title>Copy Category Data</title>
+                            </categorycopy>
+                        </children>
+                    </catalog>
                 </children>
             </admin>
         </resources>

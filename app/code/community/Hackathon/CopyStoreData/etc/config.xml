@@ -27,4 +27,37 @@
             </catalog_product_save_after>
         </events>
     </global>
+    <adminhtml>
+        <events>
+            <controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save>
+                <observers>
+                    <hackathon_copystoredata>
+                        <type>singleton</type>
+                        <class>hackathon_copystoredata/observer</class>
+                        <method>controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save</method>
+                    </hackathon_copystoredata>
+                </observers>
+            </controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save>
+        </events>
+        <layout>
+            <updates>
+                <hackathon_copystoredata>
+                    <file>hackathon/copystoredata.xml</file>
+                </hackathon_copystoredata>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <!-- URL:  http://[MAGROOT]/admin/[CONTROLLER]/[ACTION]/key/[NONCE]/ -->
+                        <Hackathon_CopyStoreData after="Mage_Adminhtml">Hackathon_CopyStoreData_Admin</Hackathon_CopyStoreData>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
 </config>

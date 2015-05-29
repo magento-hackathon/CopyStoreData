@@ -1,2 +1,4 @@
 app/code/community/Hackathon/CopyStoreData/                                app/code/community/Hackathon/CopyStoreData/
 app/etc/modules/Hackathon_CopyStoreData.xml                                app/etc/modules/Hackathon_CopyStoreData.xml
+app/design/adminhtml/default/default/layout/hackathon/                     app/design/adminhtml/default/default/layout/hackathon/
+app/design/adminhtml/default/default/template/hackathon/                   app/design/adminhtml/default/default/template/hackathon/
