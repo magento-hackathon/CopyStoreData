@@ -1,14 +1,23 @@
 <?php
 
+/**
+ * Class Hackathon_CopyStoreData_Admin_CatalogcategorycopyController
+ */
 class Hackathon_CopyStoreData_Admin_CatalogcategorycopyController extends Mage_Adminhtml_Controller_Action
 {
 
+    /**
+     *
+     */
     public function indexAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
 
+    /**
+     *
+     */
     public function saveAction()
     {
         $copyFromStore = $this->getRequest()->getParam('copy_from_store');

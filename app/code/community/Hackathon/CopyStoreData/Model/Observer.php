@@ -1,14 +1,35 @@
 <?php
 
+/**
+ * Class Hackathon_CopyStoreData_Model_Observer
+ */
 class Hackathon_CopyStoreData_Model_Observer
 {
+    /**
+     *
+     */
     const STATUS_CONFIG = 'copystoredata/settings/status';
+    /**
+     *
+     */
     const STORE_CONFIG = 'copystoredata/settings/copy_from_store';
+    /**
+     *
+     */
     const ATTRIBUTES_CONFIG = 'copystoredata/settings/fields';
 
+    /**
+     * @var array
+     */
     public $_copiedStores = array(); // Array to indicate if script has already run for specific store before to prevent loop when stores are pointed at eachother.
+    /**
+     * @var
+     */
     public $_changedAttributes;
 
+    /**
+     * @param Varien_Event_Observer $observer
+     */
     public function copyToStore(Varien_Event_Observer $observer)
     {
 
@@ -35,6 +56,11 @@ class Hackathon_CopyStoreData_Model_Observer
         }
     }
 
+    /**
+     * @param $productId
+     * @param $storeId
+     * @return mixed
+     */
     protected function _loadProduct($productId, $storeId)
     {
         $product = Mage::getModel('catalog/product')
@@ -66,6 +92,11 @@ class Hackathon_CopyStoreData_Model_Observer
     }
 
     // Initiates product and copies data which are selected in the settings folder.
+    /**
+     * @param $productId
+     * @param $storeId
+     * @return mixed
+     */
     protected function _initProduct($productId, $storeId)
     {
         $product = $this->_loadProduct($productId, $storeId);
