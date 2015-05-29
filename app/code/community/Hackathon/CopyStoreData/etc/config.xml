@@ -30,9 +30,9 @@
         </events>
         <layout>
             <updates>
-                <news>
+                <hackathon_copystoredata>
                     <file>hackathon/copystoredata.xml</file>
-                </news>
+                </hackathon_copystoredata>
             </updates>
         </layout>
     </adminhtml>
