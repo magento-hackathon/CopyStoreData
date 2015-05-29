@@ -3,22 +3,47 @@
 class Hackathon_CopyStoreData_Admin_CatalogcategorycopyController extends Mage_Adminhtml_Controller_Action
 {
 
-    // URL:  http://[MAGROOT]/admin/catalogcategorycopy/index/key/###########/
-    // If "storecode in url" is enabled there is an extra "/admin" before "/catalogcategorycopy"
     public function indexAction()
     {
         $this->loadLayout();
         $this->renderLayout();
-        // Layout will be chosen by Mage_Core_Controller_Varien_Action::addActionLayoutHandles
-        // Layout file:        /app/design/adminhtml/default/default/layout/hackathon/copystoredata.xml
-        // Item in that file:  adminhtml_catalogcategorycopy_index
-
-        // To debug layout XML enable:
-        //header( 'Content-Type: text/xml' ); echo $this->getLayout()->getXmlString(); exit;
     }
 
-    public function postAction() {
-        echo 'POST';
+    public function saveAction()
+    {
+        $copyFromStore = $this->getRequest()->getParam('copy_from_store');
+        $copyToStores = $this->getRequest()->getParam('copy_to_stores');
+        $categoryIds = $this->getRequest()->getParam('category_ids');
+        foreach ($copyToStores as $copyToStore) {
+            $categoriesToCopy = Mage::getResourceModel('catalog/category_collection')
+                ->addAttributeToSelect('*')
+                ->setStoreId($copyFromStore)
+                ->addAttributeToFilter('entity_id', array('in' => $categoryIds));
+            try {
+                foreach ($categoriesToCopy as $categoryToCopy) {
+                    $categoryDataArray = $categoryToCopy->getData();
+                    foreach ($categoryDataArray as $key => $value) {
+                        $attribute = $categoryToCopy->getResource()->getAttribute($key);
+                        if (!is_object($value) && is_object($attribute)) {
+                            if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
+                                $categoryToCopy->setData($key, $value);
+                                $categoryToCopy->setStoreId($copyToStore)->getResource()->saveAttribute($categoryToCopy, $key);
+                            }
+                        }
+
+                    }
+                }
+
+                Mage::getSingleton('adminhtml/session')
+                    ->init('core', 'adminhtml')
+                    ->addSuccess('Categories were successfully copied.');
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')
+                    ->init('core', 'adminhtml')
+                    ->addError($e->getMessage());
+            }
+        }
+        $this->_redirect('*/*/index');
     }
 
 }

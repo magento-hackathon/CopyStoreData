@@ -1,4 +1,5 @@
 <?php
+
 class Hackathon_CopyStoreData_Model_Observer
 {
     const STATUS_CONFIG = 'copystoredata/settings/status';
@@ -8,13 +9,13 @@ class Hackathon_CopyStoreData_Model_Observer
     public $_copiedStores = array(); // Array to indicate if script has already run for specific store before to prevent loop when stores are pointed at eachother.
     public $_changedAttributes;
 
-	public function copyToStore(Varien_Event_Observer $observer)
-	{
+    public function copyToStore(Varien_Event_Observer $observer)
+    {
 
 
         $product = $observer->getProduct();
 
-        if(count($this->_copiedStores) == 0){
+        if (count($this->_copiedStores) == 0) {
             $this->_copiedStores[] = $product->getStoreId();
         }
 
@@ -26,21 +27,21 @@ class Hackathon_CopyStoreData_Model_Observer
         while ($row = $storeIds->fetch()) {
             $storeId = $row['store'];
 
-            if (Mage::getStoreConfig(self::STATUS_CONFIG, $storeId) && !in_array($storeId,$this->_copiedStores)) {
+            if (Mage::getStoreConfig(self::STATUS_CONFIG, $storeId) && !in_array($storeId, $this->_copiedStores)) {
                 $this->_copiedStores[] = $storeId;
                 $this->_initProduct($product->getEntityId(), $storeId)->save();
             }
 
         }
-	}
-	
-	protected function _loadProduct($productId, $storeId)
+    }
+
+    protected function _loadProduct($productId, $storeId)
     {
         $product = Mage::getModel('catalog/product')
             ->setStoreId($storeId);
 
         $product->setData('_edit_mode', true);
-        
+
         if ($productId) {
             try {
                 $product->load($productId);
@@ -59,32 +60,32 @@ class Hackathon_CopyStoreData_Model_Observer
             }
         }
 
-        $product->setData('url_key',false);
-        
+        $product->setData('url_key', false);
+
         return $product;
     }
 
     // Initiates product and copies data which are selected in the settings folder.
-	protected function _initProduct($productId, $storeId)
+    protected function _initProduct($productId, $storeId)
     {
-	        $product = $this->_loadProduct($productId,$storeId);
-			$allowedAttributes = explode(',', Mage::getStoreConfig(self::ATTRIBUTES_CONFIG, $storeId));
+        $product = $this->_loadProduct($productId, $storeId);
+        $allowedAttributes = explode(',', Mage::getStoreConfig(self::ATTRIBUTES_CONFIG, $storeId));
 
 
-            foreach($this->_changedAttributes as $key => $value){
-                if(in_array($key,$allowedAttributes)){
-                    $product->setData($key,$value);
-                }
+        foreach ($this->_changedAttributes as $key => $value) {
+            if (in_array($key, $allowedAttributes)) {
+                $product->setData($key, $value);
             }
+        }
 
-	
-	        Mage::dispatchEvent(
-	            'catalog_product_prepare_save',
-	            array('product' => $product, 'request' => Mage::app()->getRequest())
-	        );
-	
-	        return $product;
-	    
+
+        Mage::dispatchEvent(
+            'catalog_product_prepare_save',
+            array('product' => $product, 'request' => Mage::app()->getRequest())
+        );
+
+        return $product;
+
     }
 
     /**
@@ -98,29 +99,36 @@ class Hackathon_CopyStoreData_Model_Observer
         $productIds = $helper->getProductIds();
         $copyFromId = $helper->getSelectedStoreId();
         $copyToIds = Mage::app()->getRequest()->getParam('copy_to_stores');
+        try {
+            foreach ($copyToIds as $copyToId) {
+                $productsToCopy = Mage::getResourceModel('catalog/product_collection')
+                    ->addAttributeToSelect('*')
+                    ->addStoreFilter($copyFromId)
+                    ->setStoreId($copyFromId)
+                    ->addAttributeToFilter('entity_id', array('in' => $productIds));
 
-        foreach ($copyToIds as $copyToId) {
-            $productsToCopy = Mage::getResourceModel('catalog/product_collection')
-                ->addAttributeToSelect('*')
-                ->addStoreFilter($copyFromId)
-                ->setStoreId($copyFromId)
-                ->addAttributeToFilter('entity_id', array('in' => $productIds));
-
-            foreach ($productsToCopy as $productToCopy) {
-                $productDataArray = $productToCopy->getData();
-                foreach ($productDataArray as $key => $value) {
-                    $attribute = $productToCopy->getResource()->getAttribute($key);
-                    if (!is_object($value) && is_object($attribute)) {
-                        if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
-                            $productToCopy->setData($key, $value);
-                            $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
+                foreach ($productsToCopy as $productToCopy) {
+                    $productDataArray = $productToCopy->getData();
+                    foreach ($productDataArray as $key => $value) {
+                        $attribute = $productToCopy->getResource()->getAttribute($key);
+                        if (!is_object($value) && is_object($attribute)) {
+                            if ($attribute->getBackendType() != 'static' && $attribute->getIsGlobal() == 0) {
+                                $productToCopy->setData($key, $value);
+                                $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
+                            }
                         }
                     }
-
                 }
             }
+            Mage::getSingleton('adminhtml/session')
+                ->init('core', 'adminhtml')
+                ->addSuccess('Products were successfully copied.');
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')
+                ->init('core', 'adminhtml')
+                ->addError($e->getMessage());
         }
     }
 
-		
+
 }
