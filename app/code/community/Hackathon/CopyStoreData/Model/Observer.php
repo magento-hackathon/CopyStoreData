@@ -41,7 +41,7 @@ class Hackathon_CopyStoreData_Model_Observer
 
             $originalData = $product->getOrigData();
             foreach($product->getData() as $key => $value){
-                if(!is_object($value) && $originalData[$key] != $value){
+                if(!is_object($value) && isset($originalData[$key]) && $originalData[$key] != $value){
                     $this->_changedAttributes[$key] = $value;
                 }
             }
