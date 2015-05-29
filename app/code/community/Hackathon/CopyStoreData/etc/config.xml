@@ -4,6 +4,38 @@
             <version>0.0.1</version>
         </Hackathon_CopyStoreData>
     </modules>
+    <global>
+        <models>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Model</class>
+            </hackathon_copystoredata>
+        </models>
+        <blocks>
+            <hackathon_copystoredata>
+                <class>Hackathon_CopyStoreData_Block</class>
+            </hackathon_copystoredata>
+        </blocks>
+    </global>
+    <adminhtml>
+        <events>
+            <controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save>
+                <observers>
+                    <hackathon_copystoredata>
+                        <type>singleton</type>
+                        <class>hackathon_copystoredata/observer</class>
+                        <method>controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save</method>
+                    </hackathon_copystoredata>
+                </observers>
+            </controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save>
+        </events>
+        <layout>
+            <updates>
+                <news>
+                    <file>hackathon/copystoredata.xml</file>
+                </news>
+            </updates>
+        </layout>
+    </adminhtml>
     <admin>
         <routers>
             <adminhtml>
