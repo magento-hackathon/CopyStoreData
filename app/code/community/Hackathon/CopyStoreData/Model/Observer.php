@@ -32,8 +32,6 @@ class Hackathon_CopyStoreData_Model_Observer
      */
     public function copyToStore(Varien_Event_Observer $observer)
     {
-
-
         $product = $observer->getProduct();
 
         if (count($this->_copiedStores) == 0) {
@@ -47,8 +45,9 @@ class Hackathon_CopyStoreData_Model_Observer
             }
         }
 
-        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
-        $storeIds = $read->query("SELECT scope_id as store FROM core_config_data WHERE scope = 'stores' AND path = '" . self::STORE_CONFIG . "' AND value =" . $product->getStoreId());
+        $resource = Mage::getSingleton('core/resource');
+        $read = $resource->getConnection('core_read');
+        $storeIds = $read->query("SELECT scope_id as store FROM " . $resource->getTableName('core_config_data') . " WHERE scope = 'stores' AND path = '" . self::STORE_CONFIG . "' AND value =" . $product->getStoreId());
 
         while ($row = $storeIds->fetch()) {
             $storeId = $row['store'];
@@ -107,13 +106,11 @@ class Hackathon_CopyStoreData_Model_Observer
         $product = $this->_loadProduct($productId, $storeId);
         $allowedAttributes = explode(',', Mage::getStoreConfig(self::ATTRIBUTES_CONFIG, $storeId));
 
-
         foreach ($this->_changedAttributes as $key => $value) {
             if (in_array($key, $allowedAttributes)) {
                 $product->setData($key, $value);
             }
         }
-
 
         Mage::dispatchEvent(
             'catalog_product_prepare_save',
@@ -121,7 +118,6 @@ class Hackathon_CopyStoreData_Model_Observer
         );
 
         return $product;
-
     }
 
     /**
@@ -168,6 +164,4 @@ class Hackathon_CopyStoreData_Model_Observer
                 ->addError($e->getMessage());
         }
     }
-
-
 }
