@@ -19,7 +19,7 @@
                         <children>
                             <config>
                                 <children>
-                                    <copystoredata translate="title" module="copystoredata">
+                                    <copystoredata translate="title" module="hackathon_copystoredata">
                                         <title>Copy Store Data</title>
                                         <sort_order>0</sort_order>
                                     </copystoredata>
