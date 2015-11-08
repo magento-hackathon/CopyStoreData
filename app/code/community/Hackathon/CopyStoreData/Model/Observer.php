@@ -127,41 +127,45 @@ class Hackathon_CopyStoreData_Model_Observer
      */
     public function controller_action_postdispatch_adminhtml_catalog_product_action_attribute_save($observer)
     {
-        $helper = Mage::helper('adminhtml/catalog_product_edit_action_attribute');
-        $productIds = $helper->getProductIds();
-        $copyFromId = $helper->getSelectedStoreId();
         $copyToIds = Mage::app()->getRequest()->getParam('copy_to_stores');
-        try {
-            foreach ($copyToIds as $copyToId) {
-                $productsToCopy = Mage::getResourceModel('catalog/product_collection')
-                    ->addAttributeToSelect('*')
-                    ->addStoreFilter($copyFromId)
-                    ->setStoreId($copyFromId)
-                    ->addAttributeToFilter('entity_id', array('in' => $productIds));
 
-                foreach ($productsToCopy as $productToCopy) {
-                    $productDataArray = $productToCopy->getData();
-                    foreach ($productDataArray as $key => $value) {
-                        $attribute = $productToCopy->getResource()->getAttribute($key);
-                        if (!is_object($value) &&
-                            is_object($attribute) &&
-                            $attribute->getBackendType() != 'static' &&
-                            $attribute->getIsGlobal() == 0 &&
-                            $attribute->getAttributeCode() != "url_key") {
-                                $rawValue = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productToCopy->getId(), $attribute->getAttributeCode(), $copyFromId);
-                                $productToCopy->setData($key, ($rawValue == NULL ? false : $value));
-                                $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
+        if ($copyToIds) {
+            $helper = Mage::helper('adminhtml/catalog_product_edit_action_attribute');
+            $productIds = $helper->getProductIds();
+            $copyFromId = $helper->getSelectedStoreId();
+
+            try {
+                foreach ($copyToIds as $copyToId) {
+                    $productsToCopy = Mage::getResourceModel('catalog/product_collection')
+                        ->addAttributeToSelect('*')
+                        ->addStoreFilter($copyFromId)
+                        ->setStoreId($copyFromId)
+                        ->addAttributeToFilter('entity_id', array('in' => $productIds));
+
+                    foreach ($productsToCopy as $productToCopy) {
+                        $productDataArray = $productToCopy->getData();
+                        foreach ($productDataArray as $key => $value) {
+                            $attribute = $productToCopy->getResource()->getAttribute($key);
+                            if (!is_object($value) &&
+                                is_object($attribute) &&
+                                $attribute->getBackendType() != 'static' &&
+                                $attribute->getIsGlobal() == 0 &&
+                                $attribute->getAttributeCode() != "url_key") {
+                                    $rawValue = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productToCopy->getId(), $attribute->getAttributeCode(), $copyFromId);
+                                    $productToCopy->setData($key, ($rawValue == NULL ? false : $value));
+                                    $productToCopy->setStoreId($copyToId)->getResource()->saveAttribute($productToCopy, $key);
+                            }
                         }
                     }
                 }
+                Mage::getSingleton('adminhtml/session')
+                    ->init('core', 'adminhtml')
+                    ->addSuccess('Products were successfully copied.');
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')
+                    ->init('core', 'adminhtml')
+                    ->addError($e->getMessage());
             }
-            Mage::getSingleton('adminhtml/session')
-                ->init('core', 'adminhtml')
-                ->addSuccess('Products were successfully copied.');
-        } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')
-                ->init('core', 'adminhtml')
-                ->addError($e->getMessage());
         }
     }
 }
