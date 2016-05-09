@@ -37,7 +37,7 @@
                         <copy_from_store translate="label">
                             <label>Copy From Store</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_store</source_model>
+                            <source_model>hackathon_copystoredata/system_config_source_stores</source_model>
                             <sort_order>1</sort_order>
                             <show_in_default>0</show_in_default>
                             <show_in_website>0</show_in_website>
