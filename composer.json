@@ -1,0 +1,9 @@
+{
+    "name": "hackathon/copy-store-data",
+    "type": "magento-module",
+    "description": "In Europe a lot of international shops have store views that are partly similar. For example Germany-German and Austria-German. There is no easy way to copy a most of the data, we created a solution for that.",
+    "homepage": "https://github.com/magento-hackathon/CopyStoreData",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
