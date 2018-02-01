@@ -20,7 +20,7 @@ class Hackathon_CopyStoreData_Block_Adminhtml_Catalog_Category_Copyform extends 
             'label'     => $this->__('For which Categories'),
             'title'     => $this->__('Attribute Set'),
             'required'  => true,
-            'text'      => $this->getTreeCategories()
+            'text'      => $this->getCategoriesIdsHtml()
         ));
 
         $fieldset->addField('copy_from_store', 'select', array(
@@ -50,6 +50,28 @@ class Hackathon_CopyStoreData_Block_Adminhtml_Catalog_Category_Copyform extends 
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    protected function getCategoriesIdsHtml()
+    {
+        $html = '';
+
+        // Add select all/unselect all functionality
+        $html .= "<a href='#' onclick='toggleSelectAll(true)'>Select All</a>";
+        $html .= "<span class='separator'>|</span>";
+        $html .= "<a href='#' onclick='toggleSelectAll(false)'>Unselect All</a>";
+        $html .= "<script type='text/javascript'>";
+        $html .= "  function toggleSelectAll(checked) {";
+        $html .= "      var checkboxes = document.getElementsByName('category_ids[]');";
+        $html .= "      for (var i = 0; i < checkboxes.length; i++) {";
+        $html .= "          checkboxes[i].checked = checked;";
+        $html .= "      }";
+        $html .= "  }";
+        $html .= "</script>";
+
+        $html .= $this->getTreeCategories();
+
+        return $html;
     }
 
     protected function getTreeCategories($parentId=null, $level=0)
