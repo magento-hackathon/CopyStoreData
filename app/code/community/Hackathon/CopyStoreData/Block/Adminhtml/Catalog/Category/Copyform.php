@@ -57,9 +57,9 @@ class Hackathon_CopyStoreData_Block_Adminhtml_Catalog_Category_Copyform extends 
         $html = '';
 
         // Add select all/unselect all functionality
-        $html .= "<a href='#' onclick='toggleSelectAll(true)'>Select All</a>";
+        $html .= "<a href='#' onclick='toggleSelectAll(true)'>" . Mage::helper('hackathon_copystoredata')->__('Select All') ."</a>";
         $html .= "<span class='separator'>|</span>";
-        $html .= "<a href='#' onclick='toggleSelectAll(false)'>Unselect All</a>";
+        $html .= "<a href='#' onclick='toggleSelectAll(false)'>" . Mage::helper('hackathon_copystoredata')->__('Unselect All') ."</a>";
         $html .= "<script type='text/javascript'>";
         $html .= "  function toggleSelectAll(checked) {";
         $html .= "      var checkboxes = document.getElementsByName('category_ids[]');";
